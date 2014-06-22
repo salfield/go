@@ -366,11 +366,14 @@ func (f *decFnInfo) kStruct(rv reflect.Value) {
 			return
 		}
 		tisfi := fti.sfi
+		var rvkencbytes []byte
+		var rvkencname string
 		for j := 0; j < containerLen; j++ {
 			// var rvkencname string
 			// ddecode(&rvkencname)
 			f.dd.initReadNext()
-			rvkencname := f.dd.decodeString()
+			rvkencbytes, _ = f.dd.decodeBytes(rvkencbytes)
+			rvkencname = string(rvkencbytes)
 			// rvksi := ti.getForEncName(rvkencname)
 			if k := fti.indexForEncName(rvkencname); k > -1 {
 				sfik := tisfi[k]
