@@ -492,11 +492,10 @@ func (d *msgpackDecDriver) decodeBool() (b bool) {
 }
 
 func (d *msgpackDecDriver) decodeString() (s string) {
-	clen := d.readContainerLen(msgpackContainerStr)
-	if clen > 0 {
-		s = string(d.r.readn(clen))
+	out, changed := d.decodeBytes(nil)
+	if changed {
+		return string(out)
 	}
-	d.bdRead = false
 	return
 }
 
